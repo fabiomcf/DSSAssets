@@ -1,0 +1,41 @@
+﻿@model DSSAssets.Models.LoginClass
+@{
+    ViewBag.Title = "Index";
+    
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/csslogin")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/login")
+</head>
+<body>
+    <section>
+		<article id="login">
+		<h3>GESTÃO DE ASSETS</h3>
+			<h5>AUTENTICAÇÃO</h5>
+			<!--<canvas id="ex1"></canvas>-->
+            @using (Html.BeginForm())
+            {
+			    <ul>
+                    <li>@Html.EditorFor(model => model.username)</li>
+				    <li>@Html.PasswordFor(model => model.password)</li>
+				    <li><input type='submit' name="submitlogin" id="submitlogin" value="Login" /></li>
+				    <li><img src="/DSSAssets/Content/img/auth.png" /></li>				
+			    </ul>
+            }
+            
+		<div id="logMessage">
+			<p>Login Invalido</p>
+		</div>
+		</article>
+    </section>
+	<footer>
+		<h5>Direitos Reservados 2014 - Fábio Ferreira DSS Fujitsu</h5>
+	</footer>
+</body>
+</html>

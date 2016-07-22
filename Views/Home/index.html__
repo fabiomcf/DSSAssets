@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+	<head>
+		<title>Gestão de Assets</title>
+		<meta charset='ISO 8859-1'/>
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+		<script type='text/javascript' src='js/jquery-1.7.min.js' ></script>
+		<script type='text/javascript' src='js/slides.js' ></script>
+		<script type='text/javascript' src='js/main.js' ></script>
+		<!--[if lt IE 7]>
+			<script src="js/IE7.js"></script>
+		<![endif]-->
+		<!--[if lt IE 8]>
+			<script src="js/IE8.js"></script>
+		<![endif]-->
+		<!--[if lt IE 9]>
+			<script src="js/IE9.js"></script>
+		<![endif]-->		
+	</head>
+	<body>
+		<div id="centerall">
+		<header>
+			<img src="img/logo.png"  id="logo" />
+			<a id="logout" href="index.html">Logout</a>
+		</header>
+		<section>
+			<article id="noticias">
+					<h3>HOME</h3>
+				<p>Gestão de Assets para a DSS Fujitsu da JMR. Feita em MySQL+PHP.</p>
+			</article>
+			<article id="adicionarAssets">
+					<h3>ADICIONAR ASSETS</h3>
+				<form method="POST" id="formaddasset" >
+				<ul id="dadosPessoais">
+					<li><input type="text" id="userad" placeholder="Utilizador" required /> </li>
+					<li><input type="text" id="num_enc" placeholder="Número de encomenda" required /> </li>
+					<li><input type="text" id="nome" placeholder="Nome" required /> </li>
+					<li><input type="text" id="sobrenome" placeholder="Sobrenome" required /> </li>
+					<li><input type="text" id="companhia" placeholder="Companhia" required /> </li>
+					<li><input type="text" id="local" placeholder="Local de instalação" required /> </li>
+					<li><input type="text" id="ext" placeholder="Extenssão" required /> </li>
+					<li><input type="text" id="tlm" placeholder="Telemovel" required /> </li>
+					<li><input type="text" id="piso" placeholder="Piso" required /> </li>
+				</ul>
+				<br/>
+				<ul id="declaracaoMaquina">
+				<li><select class="selectD" required >
+					<option value="" selected >Declação de Maquina</option>
+					<option value="Nova Maquina">Nova Maquina</option>
+					<option value="Substituicao de Maquina" >Substituição de Maquina</option>
+					<option value="Movimentacao de Equipamento">Movimentação de Equipamento</option>
+					<option value="Equipamento para Abate" >Equipamento para Abate</option>
+					</select>
+				</li>
+				</ul>
+				<br>
+				<ul id="MaquinaVelha">
+				<li><h3>Maquina Velha</h3></li>
+				<li><select class="selectTipMaqV">
+					<option value="" selected >Tipo de Maquina</option>
+					<option value="PC Completo">PC Completo</option>
+					<option value="Futro" >Futro</option>
+					<option value="Laptop" >Laptop</option>
+					<option value="Desktop" >Desktop</option>
+					<option value="Monitor" >Monitor</option>
+					</select>
+				</li>
+				<li><select id="selectModelVDesktops">
+					<option value="" selected >Modelo</option>
+					<option value="Esprimo D556" >Esprimo D556</option>
+					<option value="Esprimo E400" >Esprimo E400</option>
+					<option value="Esprimo E7935 E" >Esprimo E7935 E</option>
+					<option value="Esprimo E7935" >Esprimo E7935</option>
+					<option value="Esprimo E5905" >Esprimo E5905</option>
+					<option value="Esprimo E5915" >Esprimo E5915</option>
+					<option value="Esprimo E5925" >Esprimo E5925</option>
+					<option value="Esprimo P3520" >Esprimo P3520</option>
+					<option value="Esprimo P3521" >Esprimo P3521</option>
+					<option value="Esprimo D556" >Esprimo D556</option>
+					<option value="Scenic 600" >Scenic 600</option>
+					<option value="Scenic 620" >Scenic 620</option>
+					<option value="Celsius R570" >Celsius R570</option>
+					<option value="Celsius R640" >Celsius R640</option>
+					<option value="Celsius W480" >Celsius W480</option>
+					<option value="Celsius W410" >Celsius W410</option>
+					<option value="HP ProDesk 600 G1" >HP ProDesk 600 G1</option>
+					<option value="HP D310" >HP D310</option>
+					<option value="HP D530" >HP D530</option>
+					<option value="HP D530 SFF" >HP D530 SFF</option>
+					<option value="HP DC7100" >HP DC7100</option>
+					<option value="HP DC7600" >HP DC7600</option>
+					<option value="HP VL420DT" >HP VL420DT</option>
+					</select>
+				</li>	
+				<li><select id="selectModelVFutros">
+					<option value="" selected >Modelo</option>
+					<option value="S700" > S700 </option>
+					<option value="S550-2" > S550-2 </option>
+					<option value="S400" > S400 </option>
+					<option value="S300" > S300 </option>
+					</select>
+				</li>
+				<li><select id="selectModelVPortateis">
+					<option value="" selected >Modelo</option>
+					<option value="Celsius H270" >Celsius H270</option>
+					<option value="Surface Pro 3" >Surface Pro 3</option>
+					<option value="Lifebook C1320" >Lifebook C1320</option>
+					<option value="Lifebook C1410" >Lifebook C1410</option>
+					<option value="Esprimo V6555" >Esprimo V6555</option>
+					<option value="Lifebook AH552" >Lifebook AH552</option>
+					<option value="Lifebook UH552" >Lifebook UH552</option>
+					<option value="Lifebook A530" >Lifebook A530</option>
+					<option value="Lifebook S7110" >Lifebook S7110</option>
+					<option value="Lifebook S710" >Lifebook S710</option>
+					<option value="Lifebook S710 CF" >Lifebook S710 CF</option>
+					<option value="Lifebook S751" >Lifebook S751</option>
+					<option value="Lifebook S760" >Lifebook S760</option>
+					<option value="Lifebook S761" >Lifebook S761</option>
+					<option value="Lifebook S7220" >Lifebook S7220</option>
+					<option value="Lifebook E8310" >Lifebook E8310</option>
+					<option value="Lifebook E8410" >Lifebook E8410</option>
+					<option value="Lifebook E8420" >Lifebook E8420</option>
+					<option value="Lifebook E751" >Lifebook E751</option>
+					<option value="Lifebook E780" >Lifebook E780</option>
+					<option value="Lifebook T900" >Lifebook T900</option>
+					<option value="Esprimo Mobile D9510" >Esprimo Mobile D9510</option>
+					<option value="Lifebook A555" >Lifebook A555</option>
+					<option value="Lifebook A556" >Lifebook A556</option>
+					<option value="Surface Pro 3" >Surface Pro 3</option>
+					<option value="Surface Pro 4" >Surface Pro 4</option>
+					</select>
+				</li>
+				<li><input type="text" placeholder="Asset" id="assetpcv" /></li>
+				<li><input type="text" placeholder="Serial Number" id="serialpcv" /></li>
+				<li><label id="comsemMonitorVL">Com Monitor?</label><input type="checkbox" id="comsemMonitorV" /></li>
+				<li><select id="selectMV" >
+					<option value="" selected >Monitor Modelo</option>
+					<option value="B17-1">B17-1</option>
+					<option value="B17-2">B17-2</option>
+					<option value="B17-3">B17-3</option>
+					<option value="B17-4">B17-4</option>
+					<option value="E19-5">E19-5</option>
+					<option value="E19-6">E19-6</option>
+					<option value="B24-7">B24-7</option>
+					<option value="A22W-3">A22W-3</option>
+					<option value="A22W-5">A22W-5</option>
+					<option value="A24W-5">A24W-5</option>
+					<option value="">B24W-5 ECO</option>
+					<option value="B24W-5 ECO">B24W-5</option>
+					<option value="B24W-6">B24W-6</option>
+					<option value="A19-5">A19-5</option>
+					<option value="A17-5 ECO">A17-5 ECO</option>
+					<option value="B17-5">B17-5</option>
+					<option value="B19-6">B19-6</option>
+					<option value="HP ProDesk 600 G1">HP ProDesk 600 G1</option>
+					<option value="HP 1740">HP 1740</option>
+					<option value="HP D530">HP D530</option>
+					<option value="HP PL766A">HP PL766A</option>
+					<option value="HP PE1160T">HP PE1160T</option>
+					<option value="Samsung S22C450F">Samsung S22C450F</option>
+					<option value="HP CRT 17P 7550">HP CRT 17P 7550</option>
+					</select>
+				</li>
+				<li><input type="text" placeholder="Asset" id="assetmv" /></li>
+				<li><input type="text" placeholder="Serial Number" id="serialmv" /></li>
+				</ul>
+				<br/>
+				<ul id="MaquinaNova">
+				<li><h3>Maquina Nova</h3></li>
+				<li><select class="selectTipMaqN">
+					<option value="" selected >Tipo de Maquina</option>
+					<option value="PC Completo" >PC Completo</option>
+					<option value="Futro">Futro</option>
+					<option value="Laptop" >Laptop</option>
+					<option value="Desktop" >Desktop</option>
+					<option value="Monitor" >Monitor</option>
+					</select>
+				</li>
+				<li><select id="selectModelNDesktops">
+					<option value="" selected >Modelo</option>
+					<option value="Esprimo D556" >Esprimo D556</option>
+					<option value="Esprimo E400" >Esprimo E400</option>
+					<option value="Esprimo E7935 E" >Esprimo E7935 E</option>
+					<option value="Esprimo E7935" >Esprimo E7935</option>
+					<option value="Esprimo E5905" >Esprimo E5905</option>
+					<option value="Esprimo E5915" >Esprimo E5915</option>
+					<option value="Esprimo E5925" >Esprimo E5925</option>
+					<option value="Esprimo P3520" >Esprimo P3520</option>
+					<option value="Esprimo P3521" >Esprimo P3521</option>
+					<option value="Esprimo D556" >Esprimo D556</option>
+					<option value="Scenic 600" >Scenic 600</option>
+					<option value="Scenic 620" >Scenic 620</option>
+					<option value="Celsius R570" >Celsius R570</option>
+					<option value="Celsius R640" >Celsius R640</option>
+					<option value="Celsius W480" >Celsius W480</option>
+					<option value="Celsius W410" >Celsius W410</option>
+					<option value="HP ProDesk 600 G1" >HP ProDesk 600 G1</option>
+					<option value="HP D310" >HP D310</option>
+					<option value="HP D530" >HP D530</option>
+					<option value="HP D530 SFF" >HP D530 SFF</option>
+					<option value="HP DC7100" >HP DC7100</option>
+					<option value="HP DC7600" >HP DC7600</option>
+					<option value="HP VL420DT" >HP VL420DT</option>
+					</select>
+				</li>
+				<li><select id="selectModelNFutros">
+					<option value="" selected >Modelo</option>
+					<option value="S700" > S700 </option>
+					<option value="S550-2" > S550-2 </option>
+					<option value="S400" > S400 </option>
+					<option value="S300" > S300 </option>
+					</select>
+				</li>
+				<li><select id="selectModelNPortateis">
+					<option value="" selected >Modelo</option>
+					<option value="Celsius H270" >Celsius H270</option>
+					<option value="Surface Pro 3" >Surface Pro 3</option>
+					<option value="Surface Pro 4" >Surface Pro 4</option>
+					<option value="Lifebook C1320" >Lifebook C1320</option>
+					<option value="Lifebook C1410" >Lifebook C1410</option>
+					<option value="Esprimo V6555" >Esprimo V6555</option>
+					<option value="Lifebook AH552" >Lifebook AH552</option>
+					<option value="Lifebook UH552" >Lifebook UH552</option>
+					<option value="Lifebook A530" >Lifebook A530</option>
+					<option value="Lifebook S7110" >Lifebook S7110</option>
+					<option value="Lifebook S710" >Lifebook S710</option>
+					<option value="Lifebook S710 CF" >Lifebook S710 CF</option>
+					<option value="Lifebook S751" >Lifebook S751</option>
+					<option value="Lifebook S760" >Lifebook S760</option>
+					<option value="Lifebook S761" >Lifebook S761</option>
+					<option value="Lifebook S7220" >Lifebook S7220</option>
+					<option value="Lifebook E8310" >Lifebook E8310</option>
+					<option value="Lifebook E8410" >Lifebook E8410</option>
+					<option value="Lifebook E8420" >Lifebook E8420</option>
+					<option value="Lifebook E751" >Lifebook E751</option>
+					<option value="Lifebook E780" >Lifebook E780</option>
+					<option value="Lifebook T900" >Lifebook T900</option>
+					<option value="Esprimo Mobile D9510" >Esprimo Mobile D9510</option>
+					<option value="Lifebook A555" >Lifebook A555</option>
+					<option value="Lifebook A556" >Lifebook A556</option>
+					</select>
+				</li>
+				<li><input type="text" placeholder="Asset" id="assetpcn"/></li>
+				<li><input type="text" placeholder="Serial Number" id="serialpcn"/></li>
+				<li><label id="comsemMonitorNL">Com Monitor?</label><input type="checkbox" id="comsemMonitorN" />
+				<li><select name='selectMN' id="selectMN">
+				<option value="" selected >Monitor Modelo</option>
+					<option value="B17-1">B17-1</option>
+					<option value="B17-2">B17-2</option>
+					<option value="B17-3">B17-3</option>
+					<option value="B17-4">B17-4</option>
+					<option value="E19-5">E19-5</option>
+					<option value="E19-6">E19-6</option>
+					<option value="B24-7">B24-7</option>
+					<option value="A22W-3">A22W-3</option>
+					<option value="A22W-5">A22W-5</option>
+					<option value="A24W-5">A24W-5</option>
+					<option value="">B24W-5 ECO</option>
+					<option value="B24W-5 ECO">B24W-5</option>
+					<option value="B24W-6">B24W-6</option>
+					<option value="A19-5">A19-5</option>
+					<option value="A17-5 ECO">A17-5 ECO</option>
+					<option value="B17-5">B17-5</option>
+					<option value="B19-6">B19-6</option>
+					<option value="HP ProDesk 600 G1">HP ProDesk 600 G1</option>
+					<option value="HP 1740">HP 1740</option>
+					<option value="HP D530">HP D530</option>
+					<option value="HP PL766A">HP PL766A</option>
+					<option value="HP PE1160T">HP PE1160T</option>
+					<option value="Samsung S22C450F">Samsung S22C450F</option>
+					<option value="HP CRT 17P 7550">HP CRT 17P 7550</option>
+					</select><br>
+				</li>
+				<li><input type="text" placeholder="Asset" id="assetmn" /></li>
+				<li><input type="text" placeholder="Serial Number" id="serialmn"/></li>
+				</ul>
+				<br/>
+				<ul id="DadosTecnicos">
+				<li><select id="tec" required >
+				<option value="">Técnico Responsável</option>
+				<option value="Daniel Cunha">Daniel Cunha</option>
+				<option value="Michel Pião">Michel Pião</option>
+				</select>
+				</li>
+				<li><input type="date" id="data" placeholder="Data de Instalação" required /></li>
+				<li><input type="text" placeholder="Change" id="CH" required /></li>
+				<li><input type="text" placeholder="Nota SAP" id="notasap" required /></li>
+				<li>
+				<input type="file" accept="image/*|MIME_type" id="guia_transp" />
+				<input class="file" value='Guia de Transporte' />
+				<span id="id_GT"></span>
+				</li>
+				<li>
+				<input type="file" accept="image/*|MIME_type" id="cert" />
+				<input class="file" value='Certificado' />
+				<span id="id_CT"></span>
+				</li>
+				<li><textarea rows="4" cols="20" placeholder="Observações" id="obs" /></textarea></li>
+				<li><input type='submit' value='GRAVAR' id="submitasset" /></li>
+				</ul>
+				</form>
+			</article>
+			<article id="pesquisarAsset">
+				<h3>PESQUISAR ASSET</h3>
+                <form method="POST" >
+				<ul>
+					<li>A pesquisa pode ser efectuada por: </li>
+					<li>user da AD,nome,sobrenome,asset,serial,ch e nota sap.</li>
+					<li><input type='search' id='pesq' required /></li>
+					<li><input type='submit' id="btnpesqreg" value="PESQUISAR"></li>
+				</ul>
+                </form>
+			</article>
+			<article id="listarAssets">
+				<h3>LISTAR ASSET</h3>
+				<table id="listagem">
+					<caption>Dados Pessoais</caption>
+					<thead>
+						<tr>
+							<div class="tooltip">TOOLTIP TEST</div>
+							<td></td>
+							<th scope="col">Utilizador</th>
+							<th scope="col">Nº Enc.</th>
+							<th scope="col">Nome</th>
+							<th scope="col">Sobrenome</th>
+							<th scope="col">Companhia</th>
+							<th scope="col">Local Inst.</th>
+							<th scope="col">Ext.</th>
+							<th scope="col">Tlm.</th>
+							<th scope="col">Piso</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="row">1</th>
+							<td>fjs-fferreir</td>
+							<td>001/2012</td>
+							<td>Fábio</td>
+							<td>Ferreira</td>
+							<td>Fujitsu</td>
+							<td>Campo Grande</td>
+							<td>6019</td>
+							<td>925764157</td>
+							<td>3</td>
+							<td class="imgexpand"><img src="img/expand-down.png" /></td>
+							<tr class="toggleData">
+								<td></td>
+								<th> Registo</th>
+								<td>Registo 3</td>
+							</tr>
+						</tr>
+						<tr>
+							<th scope="row">2</th>
+							<td>fjs-fferreir</td>
+							<td>001/2012</td>
+							<td>Fábio</td>
+							<td>Ferreira</td>
+							<td>Fujitsu</td>
+							<td>Campo Grande</td>
+							<td>6019</td>
+							<td>925764157</td>
+							<td>4</td>
+							<td class="imgexpand"><img src="img/expand-down.png" /></td>
+							<tr class="toggleData">
+								<td></td>
+								<th> Registo</th>
+								<td>Registo 4</td>
+							</tr>
+						</tr>
+						<tr>
+							<th scope="row">3</th>
+							<td>fjs-fferreir</td>
+							<td>001/2012</td>
+							<td>Fábio</td>
+							<td>Ferreira</td>
+							<td>Fujitsu</td>
+							<td>Campo Grande</td>
+							<td>6019</td>
+							<td>925764157</td>
+							<td>3</td>
+						</tr>
+						<tr>
+							<th scope="row">4</th>
+							<td>fjs-fferreir</td>
+							<td>001/2012</td>
+							<td>Fábio</td>
+							<td>Ferreira</td>
+							<td>Fujitsu</td>
+							<td>Campo Grande</td>
+							<td>6019</td>
+							<td>925764157</td>
+							<td>3</td>
+						</tr>  
+						<tr>
+							<th scope="row">5</th>
+							<td>fjs-fferreir</td>
+							<td>001/2012</td>
+							<td>Fábio</td>
+							<td>Ferreira</td>
+							<td>Fujitsu</td>
+							<td>Campo Grande</td>
+							<td>6019</td>
+							<td>925764157</td>
+							<td>3</td>
+						</tr>
+						<tr>
+							<th scope="row">6</th>
+							<td>fjs-fferreir</td>
+							<td>001/2012</td>
+							<td>Fábio</td>
+							<td>Ferreira</td>
+							<td>Fujitsu</td>
+							<td>Campo Grande</td>
+							<td>6019</td>
+							<td>925764157</td>
+							<td>3</td>
+						</tr>
+					</tbody>
+				</table>
+			</article>
+            <article id="registarUser">
+               <h3>Registar Utilizador</h3>
+                <form method='POST'>
+			    <ul>
+				    <li><input type='text' placeholder="Username" required /></li>
+				    <li><input type='password' placeholder="Password" required /></li>
+				    <li><input type='email' placeholder="E-mail" required /></li>
+				    <li><input type='submit' id='btnregUser' value='REGISTAR'/></li>
+			    </ul>
+                </form>
+            </article>
+		</section>
+		<aside>
+			<h1>ASSETS</h1>	
+            <form method="POST">
+			<ul>
+				<li><input type="submit" id="addasset" value="ADICIONAR"  /></li>
+				<li><input type="submit" id="pesqreg" value="PESQUISAR" /></li>
+				<li><input type="submit" id="listreg" value="LISTAR" /></li>	
+			</ul>
+			<h1>CONFIGS</h1>
+			<ul>
+				<li><input type="submit" id="home" value="HOME" /></li>
+				<li><input type="submit" id="regUser" value="REGISTAR UTILIZADOR" /></li>
+			</ul>
+            </form>
+            <h1>LINKS</h1>
+			<ul>
+				<li><a href="http:\\wcpdstd02\portaldss"> - PORTAL DSS</a></li>
+				<li><a href="http:\\wcpdstd02"> - AUDITORIA LOJAS</a></li>
+			</ul>
+			<div id="logMessage">
+			</div>
+		</aside>
+		<footer>
+			<h5>Direitos Reservados @ Fábio Ferreira DSS Fujitsu @ fabio.ferreira@fsc-itps.com</h5>
+		</footer>
+		</div>
+	</body>
+</html>

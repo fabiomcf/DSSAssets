@@ -1,0 +1,491 @@
+﻿@model DSSAssets.Models.AssetsClass
+@{
+    ViewBag.Title = "Main";
+}
+
+<!DOCTYPE html>
+<html lang="pt-pt">
+	<head>
+		<title>Gestão de Assets</title>
+		<meta charset='ISO 8859-1'/>
+        @Styles.Render("~/Content/cssmain")
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/main")
+
+		<!--[if lt IE 7]>
+			<script src="js/IE7.js"></script>
+		<![endif]-->
+		<!--[if lt IE 8]>
+			<script src="js/IE8.js"></script>
+		<![endif]-->
+		<!--[if lt IE 9]>
+			<script src="js/IE9.js"></script>
+		<![endif]-->		
+	</head>
+	<body>
+		<div id="centerall">
+		<header>
+			<img src="../Content/img/logo.png"  id="logo" />
+			<a id="logout" href="#">Logout</a>
+		</header>
+		<section>
+			<article id="noticias">
+					<h3>HOME</h3>
+					<h4>Correcções A544</h4>
+				<ol>
+					<li>Colocar maquina no dominio</li>
+					<li>Ativar o windows</li>
+					<li>Ativar Office</li>
+					<li>Importar o Sylink no SEP</li>
+					<li>Adicionar o G_WRL_PC na AD</li>
+					<li>Adicionar wifi380A manualmente</li>
+					<li>Activar Firewall do windows e desactivar os filtros
+					<li>Abrir o regedit e fazer Load ao ntuser.dat do user "Default", eliminar as chaves do perfil carregado 
+						HKCU:\Software\Microsoft\Office\15.0\Common\Identity\Identities\fjs-fferreir@jm.corp.jmartins.com_AD e 
+						HKCU:\Software\Microsoft\Office\Common\UserInfo
+						fazer unload hive</li>
+					<li>Instalar drivers em falta com o deskupdate do site official da Fujitsu</li>
+					<li>Instalar drivers wireless da Intel</li>
+					<li>Instalar Avamar</li>
+				</ol>
+			</article>
+			<article id="adicionarAssets">
+					<h3>ADICIONAR ASSETS</h3>
+				@*<form method="POST" id="formaddasset" >*@
+                @using (Html.BeginForm(null, null,FormMethod.Post, new { id="formasset" }))
+                {
+				<ul id="dadosPessoais">
+                   @* <li><input type="text" id="num_enc" placeholder="Número de encomenda" required /> </li>
+                    <li><input type="date" id="data_enc" required /> </li>
+					<li><input type="text" id="userad" placeholder="Utilizador" required /> </li>
+					<li><input type="text" id="nome" placeholder="Nome" required /> </li>
+					<li><input type="text" id="sobrenome" placeholder="Sobrenome" required /> </li>
+					<li><input type="text" id="companhia" placeholder="Companhia" required /> </li>
+					<li><input type="text" id="local" placeholder="Local de instalação" required /> </li>
+					<li><input type="text" id="ext" placeholder="Extenssão" required /> </li>
+					<li><input type="text" id="tlm" placeholder="Telemovel" required /> </li>
+					<li><input type="text" id="piso" placeholder="Piso" required /> </li>*@
+
+                    <li>@Html.TextBoxFor(model => model.NumeroEncomenda, new { required = "required", placeholder = "Número de encomenda", id = "num_enc" })</li>
+                    <li>@Html.TextBoxFor(model => model.DataEncomenda, new { required = "required", placeholder = "Data de Encomenda", id = "data_enc" })</li>
+                    <li>@Html.TextBoxFor(model => model.UserAD, new { required = "required", placeholder = "User AD", id = "userad" })</li>
+                    <li>@Html.TextBoxFor(model => model.Nome, new { required = "required", placeholder = "Nome", id = "nome" })</li>
+                    <li>@Html.TextBoxFor(model => model.Sobrenome, new { required = "required", placeholder = "Sobrenome", id = "sobrenome" })</li>
+                    <li>@Html.TextBoxFor(model => model.Companhia, new { required = "required", placeholder = "Companhia", id = "companhia" })</li>
+                    <li>@Html.TextBoxFor(model => model.Local, new { required = "required", placeholder = "Local", id = "local" })</li>
+                    <li>@Html.TextBoxFor(model => model.Ext, new { required = "required", placeholder = "Ext", id = "ext" })</li>
+                    <li>@Html.TextBoxFor(model => model.Tlm, new { required = "required", placeholder = "Telemovel", id = "tlm" })</li>
+                    <li>@Html.TextBoxFor(model => model.Piso, new { required = "required", placeholder = "Piso", id = "piso" })</li>
+				</ul>
+				<br/>
+				<ul id="declaracaoMaquina">
+                <li>@Html.DropDownListFor(model => model.DeclaracaoMaquinaList, new SelectList(
+                        new List<Object>{
+                            new { value="", text="Declaração de Maquina"},
+                            new { value="Nova Maquina", text="Nova Maquina" },
+                            new { value="Substituicao de Maquina", text="Substituição de Maquina" },
+                        }, "value", "text", null), new { required = "required", placeholder = "Declaração de Maquina", id = "selectD", @class = "selectD" })</li>
+				@*<li><select class="selectD" id="selectD" required >
+					<option value="" selected >Declação de Maquina</option>
+					<option value="Nova Maquina">Nova Maquina</option>
+					<option value="Substituicao de Maquina" >Substituição de Maquina</option>
+					<option value="Movimentacao de Equipamento">Movimentação de Equipamento</option>
+					<option value="Equipamento para Abate" >Equipamento para Abate</option>
+					</select>
+				</li>*@
+				</ul>
+				<br>
+                <ul id="MaquinaVelha">
+			        <li><h3>Maquina Velha</h3></li>
+			        <li><select class="selectTipMaqV" name="selectTipMaqV" id="selectTipMaqV">
+				        <option value="" selected >Tipo de Maquina</option>
+				        <option value="PC Completo">PC Completo</option>
+				        <option value="Futro" >Futro</option>
+				        <option value="Laptop" >Laptop</option>
+				        <option value="Desktop" >Desktop</option>
+				        <option value="Monitor" >Monitor</option>
+				        </select>
+			        </li>
+			        <li><select id="selectModelVDesktops" name="selectModelVDesktops">
+				        <option value="" selected >Modelo</option>
+						<option value="Esprimo P420" >Esprimo P420</option>
+				        <option value="Esprimo E400" >Esprimo E400</option>
+						<option value="Esprimo E410" >Esprimo E410</option>
+						<option value="Esprimo E420" >Esprimo E420</option>
+						<option value="Esprimo D556" >Esprimo D556</option>
+				        <option value="Esprimo E7935 E" >Esprimo E7935 E</option>
+				        <option value="Esprimo E5905" >Esprimo E5905</option>
+				        <option value="Esprimo E5915" >Esprimo E5915</option>
+				        <option value="Esprimo E5925" >Esprimo E5925</option>
+				        <option value="Esprimo P3520" >Esprimo P3520</option>
+				        <option value="Esprimo P3521" >Esprimo P3521</option>
+				        <option value="Scenic 600" >Scenic 600</option>
+				        <option value="Scenic 620" >Scenic 620</option>
+				        <option value="Celsius R570" >Celsius R570</option>
+				        <option value="Celsius R640" >Celsius R640</option>
+				        <option value="Celsius W480" >Celsius W480</option>
+				        <option value="Celsius W410" >Celsius W410</option>
+				        <option value="HP ProDesk 600 G1" >HP ProDesk 600 G1</option>
+				        <option value="HP D310" >HP D310</option>
+				        <option value="HP D530" >HP D530</option>
+				        <option value="HP D530 SFF" >HP D530 SFF</option>
+				        <option value="HP DC7100" >HP DC7100</option>
+				        <option value="HP DC7600" >HP DC7600</option>
+				        <option value="HP VL420DT" >HP VL420DT</option>
+				        </select>
+			        </li>	
+			        <li><select id="selectModelVFutros" name="selectModelVFutros">
+				        <option value="" selected >Modelo</option>
+				        <option value="S700" > S700 </option>
+						<option value="S720" > S720 </option>
+				        <option value="S550-2" > S550-2 </option>
+				        <option value="S400" > S400 </option>
+				        <option value="S300" > S300 </option>
+				        </select>
+			        </li>
+			        <li><select id="selectModelVPortateis" name="selectModelVPortateis">
+				        <option value="" selected >Modelo</option>
+				        <option value="Celsius H270" >Celsius H270</option>
+				        <option value="Surface Pro 3" >Surface Pro 3</option>
+				        <option value="Lifebook C1320" >Lifebook C1320</option>
+				        <option value="Lifebook C1410" >Lifebook C1410</option>
+				        <option value="Esprimo V6555" >Esprimo V6555</option>
+				        <option value="Lifebook AH552" >Lifebook AH552</option>
+				        <option value="Lifebook UH552" >Lifebook UH552</option>
+						<option value="Lifebook AH532" >Lifebook AH532</option>
+				        <option value="Lifebook A530" >Lifebook A530</option>
+				        <option value="Lifebook S7110" >Lifebook S7110</option>
+				        <option value="Lifebook S710" >Lifebook S710</option>
+				        <option value="Lifebook S751" >Lifebook S751</option>
+				        <option value="Lifebook S760" >Lifebook S760</option>
+				        <option value="Lifebook S761" >Lifebook S761</option>
+						<option value="Lifebook S7210" >Lifebook S7210</option>
+				        <option value="Lifebook S7220" >Lifebook S7220</option>
+				        <option value="Hp EliteBook 840" >Hp EliteBook 840</option>
+				        <option value="Hp EliteBook 850" >Hp EliteBook 850</option>
+				        <option value="Lifebook E8420" >Lifebook E8420</option>
+				        <option value="Lifebook E751" >Lifebook E751</option>
+				        <option value="Lifebook E780" >Lifebook E780</option>
+				        <option value="Lifebook T900" >Lifebook T900</option>
+				        <option value="Esprimo Mobile D9510" >Esprimo Mobile D9510</option>
+						<option value="Lifebook A555" >Lifebook A555</option>
+						<option value="Lifebook A556" >Lifebook A556</option>
+						<option value="Lifebook A544" >Lifebook A544</option>
+						<option value="Surface Pro 3" >Surface Pro 3</option>
+					    <option value="Surface Pro 4" >Surface Pro 4</option>
+				        </select>
+			        </li>
+                    <li>@Html.TextBoxFor(model => model.AssetPCVelho, new { placeholder = "Asset", id = "assetpcv" })</li>
+                    <li>@Html.TextBoxFor(model => model.SerialPCVelho, new { placeholder = "Serial Number", id = "serialpcv" })</li>
+        @*				<li><input type="text" placeholder="Asset" id="assetpcv" /></li>
+			        <li><input type="text" placeholder="Serial Number" id="serialpcv" /></li>*@
+			        <li><label id="comsemMonitorVL">Com Monitor?</label><input type="checkbox" id="comsemMonitorV" name="comsemMonitorV" value="Sim" /></li>
+			        <li><select id="selectMV" name="selectMV">
+				        <option value="" selected >Monitor Modelo</option>
+				        <option value="B17-1">B17-1</option>
+				        <option value="B17-2">B17-2</option>
+				        <option value="B17-3">B17-3</option>
+				        <option value="B17-4">B17-4</option>
+						<option value="B17-5">B17-5</option>
+				        <option value="E19-5">E19-5</option>
+				        <option value="E19-6">E19-6</option>
+				        <option value="B24-7">B24-7</option>
+				        <option value="A22W-3">A22W-3</option>
+				        <option value="A22W-5">A22W-5</option>
+				        <option value="A24W-5">A24W-5</option>
+				        <option value="B24W-5 ECO">B24W-5 ECO</option>
+				        <option value="B24W-5">B24W-5</option>
+				        <option value="B24W-6">B24W-6</option>
+						<option value="B20T-7">B20T-7</option>
+				        <option value="A19-5">A19-5</option>
+				        <option value="A17-5 ECO">A17-5 ECO</option>
+				        <option value="B19-6">B19-6</option>
+						<option value="B19-7">B19-7</option>
+				        <option value="HP 1740">HP 1740</option>
+				        <option value="HP D530">HP D530</option>
+				        <option value="HP PL766A">HP PL766A</option>
+				        <option value="HP PE1160T">HP PE1160T</option>
+				        <option value="Samsung S22C450F">Samsung S22C450F</option>
+				        <option value="HP CRT 17P 7550">HP CRT 17P 7550</option>
+				        </select>
+			        </li>
+                    <li>@Html.TextBoxFor(model => model.AssetMonitorVelho, new { placeholder = "Asset", id = "assetmv" })</li>
+                    <li>@Html.TextBoxFor(model => model.SerialMonitorVelho, new { placeholder = "Serial Number", id = "serialmv" })</li>
+        @*			<li><input type="text" placeholder="Asset" id="assetmv" /></li>
+			        <li><input type="text" placeholder="Serial Number" id="serialmv" /></li>*@
+                </ul>
+				<br/>
+				<ul id="MaquinaNova">
+				<li><h3>Maquina Nova</h3></li>
+				<li><select class="selectTipMaqN" id="selectTipMaqN" name="selectTipMaqN">
+					<option value="" selected >Tipo de Maquina</option>
+					<option value="PC Completo" >PC Completo</option>
+					<option value="Futro">Futro</option>
+					<option value="Laptop" >Laptop</option>
+					<option value="Desktop" >Desktop</option>
+					<option value="Monitor" >Monitor</option>
+					</select>
+				</li>
+				<li><select id="selectModelNDesktops" name="selectModelNDesktops">
+					<option value="" selected >Modelo</option>
+					<option value="Esprimo P420" >Esprimo P420</option>
+					<option value="Esprimo E400" >Esprimo E400</option>
+					<option value="Esprimo E410" >Esprimo E410</option>
+                    <option value="Esprimo E420" >Esprimo E420</option>
+					<option value="Esprimo D556" >Esprimo D556</option>
+					<option value="Esprimo E7935 E" >Esprimo E7935 E</option>
+					<option value="Esprimo E7935" >Esprimo E7935</option>
+					<option value="Esprimo E5905" >Esprimo E5905</option>
+					<option value="Esprimo E5915" >Esprimo E5915</option>
+					<option value="Esprimo E5925" >Esprimo E5925</option>
+					<option value="Esprimo P3520" >Esprimo P3520</option>
+					<option value="Esprimo P3521" >Esprimo P3521</option>
+					<option value="Scenic 600" >Scenic 600</option>
+					<option value="Scenic 620" >Scenic 620</option>
+					<option value="Celsius R570" >Celsius R570</option>
+					<option value="Celsius R640" >Celsius R640</option>
+					<option value="Celsius W480" >Celsius W480</option>
+					<option value="Celsius W410" >Celsius W410</option>
+                    <option value="Celsius W420" >Celsius W420</option>
+					<option value="HP ProDesk 600 G1" >HP ProDesk 600 G1</option>
+					<option value="HP D310" >HP D310</option>
+					<option value="HP D530" >HP D530</option>
+					<option value="HP D530 SFF" >HP D530 SFF</option>
+					<option value="HP DC7100" >HP DC7100</option>
+					<option value="HP DC7600" >HP DC7600</option>
+					<option value="HP VL420DT" >HP VL420DT</option>
+					</select>
+				</li>
+				<li><select id="selectModelNFutros" name="selectModelNFutros">
+					<option value="" selected >Modelo</option>
+					<option value="S700" > S700 </option>
+					<option value="S720" > S720 </option>
+					<option value="S550-2" > S550-2 </option>
+					<option value="S400" > S400 </option>
+					<option value="S300" > S300 </option>
+					</select>
+				</li>
+				<li><select id="selectModelNPortateis" name="selectModelNPortateis">
+					<option value="" selected >Modelo</option>
+					<option value="Celsius H270" >Celsius H270</option>
+					<option value="Surface Pro 3" >Surface Pro 3</option>
+					<option value="Surface Pro 4" >Surface Pro 4</option>
+					<option value="Lifebook C1320" >Lifebook C1320</option>
+					<option value="Lifebook C1410" >Lifebook C1410</option>
+					<option value="Esprimo V6555" >Esprimo V6555</option>
+                    <option value="Lifebook A530" >Lifebook A530</option>
+                    <option value="Lifebook A532" >Lifebook A532</option>
+                    <option value="Lifebook A544" >Lifebook A544</option>
+					<option value="Lifebook A555" >Lifebook A555</option>
+					<option value="Lifebook A556" >Lifebook A556</option>
+					<option value="Lifebook AH532" >Lifebook AH532</option>
+                    <option value="Lifebook AH552" >Lifebook AH552</option>
+					<option value="Lifebook UH552" >Lifebook UH552</option>
+					<option value="Lifebook S7110" >Lifebook S7110</option>
+					<option value="Lifebook S710" >Lifebook S710</option>
+					<option value="Lifebook S710 CF" >Lifebook S710 CF</option>
+					<option value="Lifebook S751" >Lifebook S751</option>
+					<option value="Lifebook S760" >Lifebook S760</option>
+					<option value="Lifebook S761" >Lifebook S761</option>
+					<option value="Lifebook S7220" >Lifebook S7220</option>
+					<option value="Hp EliteBook 840" >Hp EliteBook 840</option>
+					<option value="Hp EliteBook 850" >Hp EliteBook 850</option>
+					<option value="Lifebook E8420" >Lifebook E8420</option>
+					<option value="Lifebook E751" >Lifebook E751</option>
+					<option value="Lifebook E780" >Lifebook E780</option>
+					<option value="Lifebook T900" >Lifebook T900</option>
+					<option value="Esprimo Mobile D9510" >Esprimo Mobile D9510</option>				
+					</select>
+				</li>
+                <li>@Html.TextBoxFor(model => model.AssetPCNovo, new { placeholder = "Asset", id = "assetpcn" })</li>
+                <li>@Html.TextBoxFor(model => model.SerialPCNovo, new { placeholder = "Serial Number", id = "serialpcn" })</li>
+                <li>@Html.TextBoxFor(model => model.AssetPCNovo, new { placeholder = "Chave Windows", id = "KeyWindows" })</li>
+                <li>@Html.TextBoxFor(model => model.SerialPCNovo, new { placeholder = "Chave Office", id = "KeyOffice" })</li>
+@*				<li><input type="text" placeholder="Asset" id="assetpcn"/></li>
+				<li><input type="text" placeholder="Serial Number" id="serialpcn"/></li>
+                <li><input type="text" placeholder="Chave Windows" id="KeyWindows"/></li>
+                <li><input type="text" placeholder="Chave Office" id="KeyOffice"/></li>*@
+				<li><label id="comsemMonitorNL">Com Monitor?</label><input type="checkbox" id="comsemMonitorN" name="comsemMonitorN" value="Sim"/>
+				<li><select name='selectMN' id="selectMN">
+				<option value="" selected >Monitor Modelo</option>
+                    <option value="A17-3">A17-3</option>
+                    <option value="A17-5">A17-5</option>
+                    <option value="A19-5">A19-5</option>
+                    <option value="A22W-3">A22W-3</option>
+					<option value="A22W-5">A22W-5</option>
+					<option value="A24W-5">A24W-5</option>
+					<option value="B17-1">B17-1</option>
+					<option value="B17-2">B17-2</option>
+					<option value="B17-3">B17-3</option>
+					<option value="B17-4">B17-4</option>
+                    <option value="B17-5">B17-5</option>
+					<option value="B19-6">B19-6</option>
+                    <option value="B19-7">B19-7</option>
+					<option value="B20T-7">B20T-7</option>
+                    <option value="B24W-5 ECO">B24W-5 ECO</option>
+					<option value="B24W-5">B24W-5</option>
+					<option value="B24W-6">B24W-6</option>
+					<option value="E19-5">E19-5</option>
+					<option value="E19-6">E19-6</option>
+					<option value="B24-7">B24-7</option>
+					<option value="HP 1502">HP 1502</option>
+					<option value="HP 1740">HP 1740</option>
+					<option value="HP D530">HP D530</option>
+					<option value="HP PL766A">HP PL766A</option>
+					<option value="HP PE1160T">HP PE1160T</option>
+					<option value="Samsung S22C450F">Samsung S22C450F</option>
+					<option value="HP CRT 17P 7550">HP CRT 17P 7550</option>
+					</select><br>
+				</li>
+                <li>@Html.TextBoxFor(model => model.AssetMonitorNovo, new { placeholder = "Asset", id = "assetmn" })</li>
+                <li>@Html.TextBoxFor(model => model.SerialMonitorNovo, new { placeholder = "Serial Number", id = "serialmn" })</li>
+@*				<li><input type="text" placeholder="Asset" id="assetmn" /></li>
+				<li><input type="text" placeholder="Serial Number" id="serialmn"/></li>*@
+				</ul>
+				<br/>
+				<ul id="DadosTecnicos">
+				<li><select id="tec" required name="tec">
+				<option value="">Técnico Responsável</option>
+				<option value="Daniel Cunha">Daniel Cunha</option>
+				<option value="Michel Pião">Michel Pião</option>
+				</select>
+				</li>
+                <li>@Html.TextBoxFor(model => model.Data, new { required = "required", placeholder = "Data", id = "data" })</li>
+                <li>@Html.TextBoxFor(model => model.CH, new { required = "required", placeholder = "Change", id = "CH" })</li>
+                <li>@Html.TextBoxFor(model => model.NotaSAP, new { required = "required", placeholder = "Nota SAP", id = "notasap" })</li>
+@*				<li><input type="date" id="data" required /></li>
+				<li><input type="text" placeholder="Change" id="CH" required /></li>
+				<li><input type="text" placeholder="Nota SAP" id="notasap" required /></li>*@
+				@*<li>
+				<input type="file" accept="image/*|MIME_type" id="guia_transp" />
+				<input class="file" value='Guia de Transporte' />
+				<span id="id_GT"></span>
+				</li>*@
+				@*<li>
+				<input type="file" accept="image/*|MIME_type" id="cert" />
+				<input class="file" value='Certificado' />
+				<span id="id_CT"></span>
+				</li>*@
+                <li><select id="status" required name="status">
+                <option value="">Status</option>
+                <option value="Entregue">Entregue</option>
+                <option value="Encaminhado para a DTS">Encaminhado para a DTS</option>
+                </select>
+                </li>
+                <li>@Html.TextAreaFor(model => model.Obs, new { placeholder = "Observações", id = "obs" })</li>
+				@*<li><textarea rows="4" cols="20" placeholder="Observações" id="obs" ></textarea></li>*@
+				<li><input type='submit' value='GRAVAR' id="submitasset" name="submitasset" /></li>
+				</ul>
+                <div id="dialog-message-asset" title="Atenção!">
+                  <p>
+                    <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
+                    Caso seja laptop novo, não esquecer enviar e-mail para 'fujitsu.apoio.imac@cttexpresso.pt' a solicitar consumo da mala e rato
+                  </p>
+                </div>
+                @*</form>*@
+                }
+                <div id="logAsset">
+                    <p>Asset Adicionado com sucesso</p>
+                </div>
+                <div id="logAssetError">
+                    <p>Não foi possível adicionar o Asset</p>
+                </div>
+                <br />
+			</article>
+			<article id="pesquisarAsset">
+				<h3>PESQUISAR ASSET</h3>
+                @using (Html.BeginForm())
+                {
+				<ul>
+					<li>A pesquisa pode ser efectuada por: </li>
+					<li>user da AD,nome,sobrenome,asset,serial,ch e nota sap.</li>
+                    <li>@Html.EditorFor(model => model.search)</li>
+					<!--<li><input type='search' id='pesq' required /></li>-->
+					<li><input type='submit' id="btnpesqreg" value="PESQUISAR" required></li>
+				</ul>
+                }
+                <div id="logMessageSearch"></div>
+                <div id="logMessageError">
+                    <p>Não foi encontrado nenhum registo</p>
+                </div>
+                 <div id="dialog-message-editasset" title="Alterado!">
+                  <p>
+                    <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
+                    Registo Alterado com sucesso!
+                  </p>
+                </div>
+                 <div id="dialog-message-editerror" title="ERRO!">
+                  <p>
+                    <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
+                    Não foi possível alterar o registo!
+                  </p>
+                </div>
+                <br />
+                <div id="loading2">
+                    <img src="../Content/img/loading.gif"  />
+                </div>
+			</article>
+			<article id="listarAssets">
+				<h3>LISTAR ASSET</h3>
+				<div id="loading">
+                    <img src="../Content/img/loading.gif" />
+                </div>
+                <div id="listagemtotal">
+                </div>
+                
+                <div id="dialog-confirm" >
+                  <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Tem a certeza que pretende remover este registo?</p>
+                </div>
+                <div id="dialog-message" title="Apagado com sucesso!">
+                  <p>
+                    <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
+                    Registo apagado com sucesso!
+                  </p>
+                </div>
+                <div id="dialog-message-error" title="Erro!">
+                  <p>
+                    <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
+                    Não foi possível apagar o registo!
+                  </p>
+                </div>
+			</article>
+            <article id="registarUser">
+               <h3>Registar Utilizador</h3>
+                <form method='POST'>
+			    <ul>
+				    <li><input type='text' placeholder="Username" required /></li>
+				    <li><input type='password' placeholder="Password" required /></li>
+				    <li><input type='email' placeholder="E-mail" required /></li>
+				    <li><input type='submit' id='btnregUser' value='REGISTAR'/></li>
+			    </ul>
+                </form>
+            </article>
+            
+		</section>
+		<aside>
+			<h1>ASSETS</h1>	
+            <form method="POST">
+			<ul>
+				<li><input type="submit" id="addasset" value="ADICIONAR"  /></li>
+				<li><input type="submit" id="pesqreg" value="PESQUISAR" /></li>
+				<li><input type="submit" id="listreg" value="LISTAR" /></li>	
+			</ul>
+			<h1>CONFIGS</h1>
+			<ul>
+				<li><input type="submit" id="home" value="HOME" /></li>
+				<li><input type="submit" id="regUser" value="REGISTAR UTILIZADOR" /></li>
+			</ul>
+            </form>
+            <h1>LINKS</h1>
+			<ul>
+				<li><a href="http:\\wcpdstd02\portal"> - PORTAL DSS</a></li>
+			</ul>
+		</aside>
+		<footer>
+			<h5>Direitos Reservados - Fábio Ferreira - DSS Fujitsu - 2016</h5>
+		</footer>
+		</div>
+	</body>
+</html>
+
